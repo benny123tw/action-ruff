@@ -1,0 +1,22 @@
+[project]
+name = "action-ruff"
+version = "0.1.0"
+description = "reviewdog action for ruff"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ruff>=0.8.4",
+]
+authors = [
+  { name = "Benny Yen", email = "benny123tw@gmail.com" }
+]
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "W",
+  "I",
+  "B",
+  "C4",
+  "UP"
+]
