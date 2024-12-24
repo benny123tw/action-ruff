@@ -16,8 +16,8 @@ if ! command -v uvx > /dev/null 2>&1; then
     echo 'uv installed successfully.'
   else
     echo 'Failed to install uv.' >&2
-    exist 1
-  Failed
+    exit 1
+  fi
 
   # Source the environment setup script
   if [ -f "$HOME/.local/bin/env" ]; then
@@ -25,7 +25,7 @@ if ! command -v uvx > /dev/null 2>&1; then
   else
     echo 'Environment setup script not found.' >&2
     exit 1
-  Failed
+  fi
 
   set +e
   echo '::endgroup::'
@@ -34,13 +34,14 @@ else
 fi
 
 echo '::group::🐶 Installing reviewdog ... https://github.com/reviewdog/reviewdog'
-curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b "${TEMP_PATH}" "${REVIEWDOG_VERSION}" 2>&1
+curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh \
+  | sh -s -- -b "${TEMP_PATH}" "${REVIEWDOG_VERSION}" 2>&1
 echo '::endgroup::'
 
 echo "ruff version: $(uvx ruff --version)"
 
 # Assign a default value to files_to_check
-files_to_check = ""
+files_to_check=""
 
 # Check if IS_CHANGED_FILES_ENABLED is true and reassign files_to_check if so
 if [ "${IS_CHANGED_FILES_ENABLED}" = "true" ]; then
