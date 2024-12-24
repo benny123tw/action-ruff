@@ -28,8 +28,28 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
 
-      - name: Run Ruff check with reviewdog
+      - name: ruff-github-pr-check
         uses: ./
+        with:
+          tool_name: ruff-github-pr-check
+          reporter: github-pr-check
+          level: info
+          ruff_flags: "testdata/"
+
+      - name: ruff-github-check
+        uses: ./
+        with:
+          tool_name: ruff-github-check
+          reporter: github-check
+          level: warning
+          ruff_flags: "testdata/"
+
+      - name: ruff-github-pr-review
+        uses: ./
+        with:
+          tool_name: ruff-github-pr-review
+          reporter: github-pr-review
+          ruff_flags: "testdata/"
 
   without-setup-uv:
     runs-on: ubuntu-latest
@@ -38,5 +58,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run Ruff check with reviewdog
+      - name: ruff-github-check
         uses: ./
+        with:
+          tool_name: ruff-github-check
+          reporter: github-check
+          level: warning
+          ruff_flags: "testdata/"
