@@ -44,7 +44,7 @@ inputs:
   ruff_flags:
     description: "flags and args of ruff command. Default: '.'"
     required: false
-    default: '.'
+    default: ''
   workdir:
     description: "The directory from which to look for and run eslint. Default '.'"
     required: false
@@ -54,7 +54,7 @@ inputs:
     required: false
     default: 'eslint'
   changed_files:
-    description: 'Whether to only run Ruff on hanged files. Defaults to `true`.'
+    description: 'Whether to only run Ruff on changed files. Defaults to `true`.'
     required: false
     default: 'true'
 runs:
