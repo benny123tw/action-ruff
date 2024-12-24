@@ -19,12 +19,21 @@ if ! command -v uvx > /dev/null 2>&1; then
     exit 1
   fi
 
-  # Source the environment setup script
-  if [ -f "$HOME/.local/bin/env" ]; then
-    . "$HOME/.local/bin/env"
-  else
-    echo 'Environment setup script not found.' >&2
-    exit 1
+  # Verify uvx availability after installing
+  if ! command -v uvx > /dev/null 2>&1; then
+    echo "uvx not found after installation. Attempting to source the environment again."
+    if [ -f "$HOME/.local/bin/env" ]; then
+      . "$HOME/.local/bin/env"
+    else
+      echo 'Environment setup script not found. uv is not installed properly. Exiting.'
+      exit 1
+    fi
+
+    # Final check: if it's still missing, exit
+    if ! command -v uvx > /dev/null 2>&1; then
+      echo 'uvx command is still unavailable. Exiting.'
+      exit 1
+    fi
   fi
 
   set +e
